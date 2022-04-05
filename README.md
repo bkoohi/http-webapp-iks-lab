@@ -82,23 +82,7 @@ Scale Kubernetes pods.
 4.2 Click the button in the upper right corner to create a new Cloud Shell ( https://cloud.ibm.com/shell )
 
 
-## 5- Clone a starter application
-
-In this section, you will clone a GitHub repo with a simple Helm-based NodeJS starter application with a landing page and two endpoints to get started. You can always extend the starter application based on your requirement.
-
-1- On a terminal, run the below command to clone the GitHub repository to your machine:
-
-```
-git clone https://github.com/IBM-Cloud/kubernetes-node-app
-```
-2- Change to the application directory,
-```
-cd kubernetes-node-app
-```
-This starter application code contains all the necessary configuration files for local development and deployment to Kubernetes.
-
-
-### 6- Deploy the application with Helm 3
+### 5- Deploy the application with Helm 3
 The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the starter application using Helm. Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
 1- Define an environment variable named MYPROJECT and set the name of the application by replacing the placeholder with your initials:
@@ -128,14 +112,32 @@ If you wish to use the default Kubernetes namespace, run the below command to se
 export KUBERNETES_NAMESPACE=default
 ```
 
-6- Change to the chart directory under your starter application directory:
+7- Install the hello-world app:
 ```
-cd chart/kubernetesnodeapp
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: load-balancer-example
+  name: hello-world
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: load-balancer-example
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: load-balancer-example
+    spec:
+      containers:
+      - image: gcr.io/google-samples/node-hello:1.0
+        name: hello-world
+        ports:
+        - containerPort: 8080
 ```
-
-7- Install the Helm chart:
 ```
-helm3 install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
+kubectl apply -f https://k8s.io/examples/service/load-balancer-example.yaml
 ```
 ### 7-  Use the IBM-provided domain for your cluster
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
