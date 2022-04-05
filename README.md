@@ -112,7 +112,7 @@ If you wish to use the default Kubernetes namespace, run the below command to se
 export KUBERNETES_NAMESPACE=default
 ```
 
-7- Install the hello-world app:
+6- Install the hello-world app:
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -139,10 +139,22 @@ spec:
 ```
 kubectl apply -f https://k8s.io/examples/service/load-balancer-example.yaml
 ```
+7- Display hello-world app deployment:
+```
+kubectl get deployments hello-world
+kubectl describe deployments hello-world
+```
+
+8- Display hello-world ReplicaSet objects:
+```
+kubectl get replicasets
+kubectl describe replicasets
+```
+
 ### 7-  Use the IBM-provided domain for your cluster
 Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
 
-Use Ingress to set up the cluster inbound connection to the service.
+Create a Service object that exposes the hello-world deployment:
 
 ![plot](https://cloud.ibm.com/docs-content/v1/content/d7719795b28ea8f7b7514e07e872e2cc3e8e9c6f/solution-tutorials/images/solution2/Ingress.png)
 
@@ -150,59 +162,46 @@ Use Ingress to set up the cluster inbound connection to the service.
 ```
 ibmcloud ks cluster get --cluster $MYCLUSTER
 ```
-to find
+Deploy the service:
+```
+kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
+```
 
-Ingress subdomain: mycluster.us-south.containers.appdomain.cloud
-Ingress secret:    mycluster
+7.2 Display Kubernetes services deployed in previous step:
+```
+kubectl get services my-service
+```
+It may take up to 5 min to update Loadbalancer in IBM Cloud with new service. As an example of output:
+```
+Name:                     my-service
+Namespace:                default
+Labels:                   app.kubernetes.io/name=load-balancer-example
+Annotations:              <none>
+Selector:                 app.kubernetes.io/name=load-balancer-example
+Type:                     LoadBalancer
+IP Families:              <none>
+IP:                       172.21.72.4
+IPs:                      172.21.72.4
+LoadBalancer Ingress:     f17a4a30-us-south.lb.appdomain.cloud
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  32691/TCP
+Endpoints:                172.17.32.206:8080,172.17.32.207:8080,172.17.40.205:8080 + 2 more...
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason                           Age   From                Message
+  ----    ------                           ----  ----                -------
+  Normal  EnsuringLoadBalancer             15m   service-controller  Ensuring load balancer
+  Normal  EnsuredLoadBalancer              15m   service-controller  Ensured load balancer
+  Normal  CloudVPCLoadBalancerNormalEvent  10m   ibm-cloud-provider  Event on cloud load balancer my-service for service default/my-service with UID d3026d55-587d-434d-b318-fecd19e32193: The VPC load balancer that routes requests to this Kubernetes LoadBalancer service is currently online/active.
+  
+```
+7.5 Use the loadbalancer in "LoadBalancer Ingress:" field and HTTP port in "TargetPort:". Open your application in a browser at https://"LoadBalancer Ingress:"TargetPort:". Output display should be:
+```
+Hello Kubernetes!
+```
 
-7.2 Define environment variables INGRESS_SUBDOMAIN and INGRESS_SECRET to hold the values
-```
-export INGRESS_SUBDOMAIN=<INGRESS_SUBDOMAIN_FROM_ABOVE_STEP>
-```
-```
-export INGRESS_SECRET=<INGRESS_SECRET>
-```
-7.3 Change to your starter application directory and run the below bash command to create an Ingress file ingress-ibmdomain.yaml pointing to the IBM-provided domain with support for HTTP and HTTPS.
-```
-cd  ~/kubernetes-node-app
-```
-```
-./ingress.sh ibmdomain_https
-```
-7.4 The file is generated from a template file ingress-ibmdomain-template.yaml under yaml-templates folder by replacing all the values wrapped in the placeholders ($) with the appropriate values from the environment variables.
-
-Deploy the Ingress
-```
-kubectl apply -f ingress-ibmdomain.yaml
-```
-7.5 Open your application in a browser at https://<nameofproject>.<ingress-sub-domain>/ or run the below command to see the HTTP output
-```
-curl -I https://$MYPROJECT.$INGRESS_SUBDOMAIN
-```
-An exmaple output:
-	
-```
-HTTP/2 200
-	
-date: Mon, 04 Apr 2022 13:47:39 GMT
-	
-content-type: text/html; charset=UTF-8
-	
-content-length: 58215
-	
-x-powered-by: Express
-	
-accept-ranges: bytes
-	
-cache-control: public, max-age=0
-	
-last-modified: Tue, 01 Feb 2022 15:43:18 GMT
-	
-etag: W/"e367-17eb5f45df0"
-	
-strict-transport-security: max-age=15724800; includeSubDomains
-	
-```
 ### 8-  Clean up and remove application
 	
 8.1 List application deployment
