@@ -211,7 +211,7 @@ kubectl get deployments
 	
 8.2 Identify kubernetesnodeapp-deployment application in the list and delete
 ```
-kubectl delete -n default deployment kubernetesnodeapp-deployment
+kubectl delete -n default deployment hello-world 
 ```
 	
 8.3 List installed ingress controller 
@@ -221,6 +221,6 @@ kubectl get ingress
 	
 8.4 Delete ngress-for-ibmdomain-http-and-https Ingress controller 
 ```
-kubectl delete -n default ingress ingress-for-ibmdomain-http-and-https
+kubectl delete -n default service my-service  
 ```
 	
