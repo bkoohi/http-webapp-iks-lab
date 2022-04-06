@@ -76,10 +76,26 @@ Scale Kubernetes pods.
 3.5- Users access the application
 
 
-## 4- Start a new IBM Cloud Shell
+## 4- Start a new IBM Cloud Shell or setup your client
+You can use IBM Cloud Shell or setup your laptop client environment.
+
 4.1 From the IBM Cloud console in your browser, select the account where you have been invited.
 
 4.2 Click the button in the upper right corner to create a new Cloud Shell ( https://cloud.ibm.com/shell )
+
+4.3 If you are interested to execute this lap from your laptop , you need to install the following tools in your laptop:
+Install must-have tools to be productive with IBM Cloud:
+
+    * IBM Cloud CLI - the command line interface to interact with IBM Cloud API.
+    * Docker - to deliver and run software in packages called containers.
+    * kubectl - a command line interface for running commands against Kubernetes clusters.
+    * oc - manages OpenShift applications, and provides tools to interact with each component of your system.
+    * Helm 3 - helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.
+    * Terraform - automates your resource provisioning.
+    * jq - a lightweight and flexible command-line JSON processor.
+    * Git - a free and open source distributed version control system.
+
+For tools installation, please follow instructions in this link: https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-tutorials
 
 
 ### 5- Deploy the application with Helm 3
