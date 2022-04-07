@@ -1,26 +1,13 @@
 # 1- Hands-on lab training http-webapp-iks-lab
 
-Deploy a HTTP Web App on IKS cluster Workshop 
+Deploy a Scalable Web App on IKS cluster Workshop
 
-The purpose of this structured, no-cost, hands-on, instructor-led learning 
-experience is to demonstrate how to combine different technologies such 
-as Container Orchestration Platform, Container Registry, and cloud 
-computing environment to kickstart cloud native applications. Specifically, 
-the attendees will learn how to: 
+The purpose of this structured, no-cost, hands-on, instructor-led learning experience is to demonstrate how to combine different technologies such as Container Orchestration Platform, Container Registry, and cloud computing environment to kickstart cloud native applications. Specifically, the attendees will learn how to:
 
-     Deploy a web HTTP application to the Kubernetes cluster.
-     Bind a custom subdomain.
-     Monitor the logs and health of the cluster.
-     Scale Kubernetes pods.
+ Deploy a HTTP web application to the Kubernetes cluster.
+ Bind to default subdomain.
 
-Tasks to complete:
-  - [x] A developer downloads or clones a starter web application.
-  - [x] Optionally build the application to produce a container image.
-  - [x] Optionally the image is pushed to a namespace in the IBM Cloud Container Registry.
-  - [x] The application is deployed to a Kubernetes cluster.
-  - [x] Users access the application.
-
-https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-kubernetes
+Additional IBM Cloud solution tutotials can be access from this link: https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-scalable-webapp-kubernetes
 
 ## 2- Lab preparation
 Follow these instructions for the setup of the initial Lab environment.
