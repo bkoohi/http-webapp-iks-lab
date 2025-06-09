@@ -112,7 +112,7 @@ ibmcloud ks cluster config --cluster $MYCLUSTER
 
 If you wish to use the default Kubernetes namespace, run the below command to set an environment variable
 ```
-export KUBERNETES_NAMESPACE=default
+export KUBERNETES_NAMESPACE=<your-initial>-hello-world
 ```
 
 6- Install the hello-world app:
