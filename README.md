@@ -141,6 +141,8 @@ spec:
 ```
 ```
 kubectl apply -f https://k8s.io/examples/service/load-balancer-example.yaml
+or
+kubectl create deployment hello-world --image=your-image --save-config
 ```
 7- Display hello-world app deployment:
 ```
